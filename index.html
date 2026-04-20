@@ -24,6 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: -40px;
   }
 
   .logo {
@@ -36,8 +37,11 @@
     50% { transform: translateY(-8px); }
   }
 
+  /* RIGHT COLUMN STACKS EVERYTHING */
   .right {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
   }
 
@@ -60,12 +64,6 @@
     text-transform: uppercase;
     opacity: 0.65;
     margin-bottom: 8px;
-    animation: fadePulse 3s ease-in-out infinite;
-  }
-
-  @keyframes fadePulse {
-    0%,100% { opacity: 0.5; }
-    50% { opacity: 0.8; }
   }
 
   .value {
@@ -98,6 +96,19 @@
     50% { transform: scale(1.06); }
     100% { transform: scale(1); }
   }
+
+  /* ✔️ TRUE BELOW-COUNTDOWN MESSAGE */
+  .message {
+    margin-top: 30px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    opacity: 0.55;
+    text-transform: uppercase;
+
+    /* THIS is the key: aligns with countdown center */
+    width: 100%;
+    text-align: center;
+  }
 </style>
 </head>
 
@@ -110,6 +121,7 @@
   </div>
 
   <div class="right">
+
     <div class="text">
 
       <div class="unit">
@@ -133,6 +145,10 @@
       </div>
 
     </div>
+
+    <!-- centered under countdown (NOT page-wide distortion) -->
+    <div class="message">Until Store Opens</div>
+
   </div>
 
 </div>
