@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Countdown</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #ffffff;
+    font-family: "Georgia Pro", Georgia, serif;
+  }
+
+  .layout {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    align-items: center;
+  }
+
+  .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo {
+    height: 260px;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .right {
+    display: flex;
+    justify-content: center;
+  }
+
+  .text {
+    display: flex;
+    gap: 45px;
+    align-items: center;
+  }
+
+  .unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 160px;
+  }
+
+  .label {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 8px;
+    animation: fadePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes fadePulse {
+    0%,100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+  }
+
+  .value {
+    font-size: 120px;
+    font-weight: 600;
+    width: 160px;
+    text-align: center;
+
+    background: linear-gradient(90deg, #ff3131, #ff914d, #ff3131);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    animation: shimmer 6s linear infinite;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .pop {
+    animation: pop 0.15s ease;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <div class="left">
+    <img class="logo" src="https://i.imgur.com/6uMYEaL.png" />
+  </div>
+
+  <div class="right">
+    <div class="text">
+
+      <div class="unit">
+        <div class="label">Days</div>
+        <div class="value" id="days">0</div>
+      </div>
+
+      <div class="unit">
+        <div class="label">Hours</div>
+        <div class="value" id="hours">0</div>
+      </div>
+
+      <div class="unit">
+        <div class="label">Minutes</div>
+        <div class="value" id="minutes">0</div>
+      </div>
+
+      <div class="unit">
+        <div class="label">Seconds</div>
+        <div class="value" id="seconds">0</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const targetDate = new Date("April 22, 2026 00:00:00").getTime();
+
+  const d = document.getElementById("days");
+  const h = document.getElementById("hours");
+  const m = document.getElementById("minutes");
+  const s = document.getElementById("seconds");
+
+  let last = {};
+
+  function animate(el) {
+    el.classList.remove("pop");
+    void el.offsetWidth;
+    el.classList.add("pop");
+  }
+
+  function update() {
+    const diff = targetDate - Date.now();
+    if (diff <= 0) return;
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff / 3600000) % 24);
+    const minutes = Math.floor((diff / 60000) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    if (days !== last.days) { d.textContent = days; animate(d); last.days = days; }
+    if (hours !== last.hours) { h.textContent = hours; animate(h); last.hours = hours; }
+    if (minutes !== last.minutes) { m.textContent = minutes; animate(m); last.minutes = minutes; }
+    if (seconds !== last.seconds) { s.textContent = seconds; animate(s); last.seconds = seconds; }
+  }
+
+  update();
+  setInterval(update, 250);
+</script>
+
+</body>
+</html>
